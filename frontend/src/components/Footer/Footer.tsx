@@ -20,16 +20,16 @@ const Footer: React.FC = () => {
               We deliver excellence in web development, mobile apps, and digital marketing.
             </p>
             <div className="social-icons">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a href="https://www.facebook.com/metabyteinfosys" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <FaFacebookF />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a href="https://x.com/Metabyteinfosys" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <FaTwitter />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a href="https://www.linkedin.com/company/metabyteinfosys" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <FaLinkedinIn />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a href="https://www.instagram.com/metabyteinfosys/" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <FaInstagram />
               </a>
             </div>

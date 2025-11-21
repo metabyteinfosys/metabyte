@@ -55,12 +55,12 @@ const Home: React.FC = () => {
     {
       icon: <FaUsers />,
       title: 'Expert Team',
-      description: 'Our team of 50+ professionals brings decades of combined experience in cutting-edge technologies.'
+      description: 'Our team professionals brings yearss of combined experience in cutting-edge technologies.'
     },
     {
       icon: <FaClock />,
       title: 'On-Time Delivery',
-      description: '98% of our projects are delivered on or before the deadline with zero compromise on quality.'
+      description: '100% of our projects are delivered on or before the deadline with zero compromise on quality.'
     },
     {
       icon: <FaLightbulb />,
@@ -265,7 +265,7 @@ const Home: React.FC = () => {
         </div>
       </section>
      
-      {/* Testimonials Section */}
+      {/* Testimonials Section
       <section className="testimonials-section">
         <div className="container">
           <motion.div
@@ -330,7 +330,7 @@ const Home: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
 
       {/* CTA Section */}
