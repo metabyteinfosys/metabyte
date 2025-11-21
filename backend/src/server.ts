@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/database';
 import appointmentRoutes from './routes/appointment.routes';
 import quoteRoutes from './routes/quote.routes';
+import authRoutes from './routes/auth.routes';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/quotes', quoteRoutes);
 

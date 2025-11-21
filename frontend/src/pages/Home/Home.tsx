@@ -348,8 +348,8 @@ const Home: React.FC = () => {
               Let's discuss how we can help transform your business with our expert IT solutions.
             </p>
             <div className="cta-buttons">
-              <Link to="/book-appointment" className="btn btn-primary">
-                Book a Consultation
+              <Link to="/get-quote" className="btn btn-primary">
+                Get a  Free Quote
               </Link>
               <Link to="/contact" className="btn btn-secondary">
                 Contact Us

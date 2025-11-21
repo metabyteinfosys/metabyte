@@ -7,6 +7,7 @@ import {
   updateQuoteStatus,
   deleteQuote,
 } from '../controllers/quote.controller';
+import { authenticate } from '../middleware/auth.middleware';
 
 const router = Router();
 
@@ -19,9 +20,9 @@ const quoteValidation = [
 ];
 
 router.post('/', quoteValidation, createQuote);
-router.get('/', getAllQuotes);
-router.get('/:id', getQuoteById);
-router.patch('/:id/status', updateQuoteStatus);
-router.delete('/:id', deleteQuote);
+router.get('/', authenticate, getAllQuotes);
+router.get('/:id', authenticate, getQuoteById);
+router.patch('/:id/status', authenticate, updateQuoteStatus);
+router.delete('/:id', authenticate, deleteQuote);
 
 export default router;

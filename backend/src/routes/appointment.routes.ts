@@ -7,6 +7,7 @@ import {
   updateAppointmentStatus,
   deleteAppointment,
 } from '../controllers/appointment.controller';
+import { authenticate } from '../middleware/auth.middleware';
 
 const router = Router();
 
@@ -20,9 +21,9 @@ const appointmentValidation = [
 ];
 
 router.post('/', appointmentValidation, createAppointment);
-router.get('/', getAllAppointments);
-router.get('/:id', getAppointmentById);
-router.patch('/:id/status', updateAppointmentStatus);
-router.delete('/:id', deleteAppointment);
+router.get('/', authenticate, getAllAppointments);
+router.get('/:id', authenticate, getAppointmentById);
+router.patch('/:id/status', authenticate, updateAppointmentStatus);
+router.delete('/:id', authenticate, deleteAppointment);
 
 export default router;
