@@ -84,7 +84,7 @@ const About: React.FC = () => {
                   <p>Client Satisfaction</p>
                 </div>
                 <div className="about-stat">
-                  <h3>50+</h3>
+                  <h3>100+</h3>
                   <p>Projects Delivered</p>
                 </div>
                 <div className="about-stat">

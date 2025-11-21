@@ -13,7 +13,7 @@ import './App.css';
 
 const App: React.FC = () => {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="app">
         <Routes>
           {/* Admin Routes - No Navbar/Footer */}
