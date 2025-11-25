@@ -66,7 +66,6 @@ const AdminLogin: React.FC = () => {
           <div className="admin-login-header">
             <FaUserShield className="admin-login-icon" />
             <h1>Admin Login</h1>
-            <p>Access the admin dashboard</p>
           </div>
 
           {error && (
@@ -90,7 +89,7 @@ const AdminLogin: React.FC = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="admin@metabyte.com"
+                placeholder="Enter your email"
                 required
               />
             </div>
@@ -114,10 +113,6 @@ const AdminLogin: React.FC = () => {
               {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
-
-          <div className="admin-login-footer">
-            <p>Metabyte Admin Portal</p>
-          </div>
         </motion.div>
       </div>
     </div>

@@ -1,47 +1,57 @@
-const http = require('http');
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
-// Create admin
-const createAdmin = () => {
-  const data = JSON.stringify({
-    email: 'admin@metabyte.com',
-    password: 'admin123',
-    name: 'Admin User'
-  });
+// Admin Schema
+const adminSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  name: { type: String, required: true },
+  role: { type: String, default: 'admin' },
+  createdAt: { type: Date, default: Date.now }
+});
 
-  const options = {
-    hostname: 'localhost',
-    port: 5000,
-    path: '/api/auth/create-admin',
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': data.length
-    }
-  };
+const Admin = mongoose.model('Admin', adminSchema);
 
-  const req = http.request(options, (res) => {
-    let body = '';
-    
-    res.on('data', (chunk) => {
-      body += chunk;
-    });
-    
-    res.on('end', () => {
-      console.log('Status Code:', res.statusCode);
-      console.log('Response:', body);
+async function createAdmin() {
+  try {
+    console.log('Connecting to MongoDB...');
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('Connected to MongoDB');
+
+    const email = 'admin@metabyte.com.au';
+    const password = 'admin123';
+    const name = 'Admin User';
+
+    // Check if admin already exists
+    const existingAdmin = await Admin.findOne({ email });
+    if (existingAdmin) {
+      console.log('⚠️  Admin user already exists:', email);
       process.exit(0);
-    });
-  });
+    }
 
-  req.on('error', (error) => {
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create admin
+    const admin = new Admin({
+      email,
+      password: hashedPassword,
+      name,
+      role: 'admin'
+    });
+
+    await admin.save();
+    console.log('Admin user created successfully!');
+    console.log('Email:', email);
+    console.log('Password:', password);
+    console.log('\nPlease change the password after first login!');
+
+    process.exit(0);
+  } catch (error) {
     console.error('Error:', error.message);
     process.exit(1);
-  });
+  }
+}
 
-  req.write(data);
-  req.end();
-};
-
-// Wait 2 seconds then create admin
-console.log('Waiting for server to start...');
-setTimeout(createAdmin, 2000);
+createAdmin();
