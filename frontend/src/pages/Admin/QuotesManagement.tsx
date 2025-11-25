@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSearch, FaFilter, FaTrash, FaEye } from 'react-icons/fa';
+import api from '../../services/api';
 import './QuotesManagement.css';
 
 interface Quote {
@@ -29,17 +30,9 @@ const QuotesManagement: React.FC = () => {
   }, []);
 
   const fetchQuotes = async () => {
-    const token = localStorage.getItem('adminToken');
-    
     try {
-      const response = await fetch('http://localhost:5000/api/quotes', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await response.json();
-      setQuotes(data.data || data);
+      const response = await api.get('/quotes');
+      setQuotes(response.data.data || response.data);
     } catch (error) {
       console.error('Error fetching quotes:', error);
     } finally {
@@ -48,18 +41,8 @@ const QuotesManagement: React.FC = () => {
   };
 
   const updateQuoteStatus = async (id: string, status: string) => {
-    const token = localStorage.getItem('adminToken');
-
     try {
-      await fetch(`http://localhost:5000/api/quotes/${id}/status`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ status }),
-      });
-
+      await api.patch(`/quotes/${id}/status`, { status });
       fetchQuotes();
     } catch (error) {
       console.error('Error updating quote status:', error);
@@ -69,15 +52,8 @@ const QuotesManagement: React.FC = () => {
   const deleteQuote = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this quote?')) return;
 
-    const token = localStorage.getItem('adminToken');
-
     try {
-      await fetch(`http://localhost:5000/api/quotes/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await api.delete(`/quotes/${id}`);
 
       fetchQuotes();
     } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSearch, FaFilter, FaTrash, FaEye } from 'react-icons/fa';
+import api from '../../services/api';
 import './AppointmentsManagement.css';
 
 interface Appointment {
@@ -28,17 +29,9 @@ const AppointmentsManagement: React.FC = () => {
   }, []);
 
   const fetchAppointments = async () => {
-    const token = localStorage.getItem('adminToken');
-    
     try {
-      const response = await fetch('http://localhost:5000/api/appointments', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await response.json();
-      setAppointments(data.data || data);
+      const response = await api.get('/appointments');
+      setAppointments(response.data.data || response.data);
     } catch (error) {
       console.error('Error fetching appointments:', error);
     } finally {
@@ -47,18 +40,8 @@ const AppointmentsManagement: React.FC = () => {
   };
 
   const updateAppointmentStatus = async (id: string, status: string) => {
-    const token = localStorage.getItem('adminToken');
-
     try {
-      await fetch(`http://localhost:5000/api/appointments/${id}/status`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ status }),
-      });
-
+      await api.patch(`/appointments/${id}/status`, { status });
       fetchAppointments();
     } catch (error) {
       console.error('Error updating appointment status:', error);
@@ -68,15 +51,8 @@ const AppointmentsManagement: React.FC = () => {
   const deleteAppointment = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this appointment?')) return;
 
-    const token = localStorage.getItem('adminToken');
-
     try {
-      await fetch(`http://localhost:5000/api/appointments/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await api.delete(`/appointments/${id}`);
 
       fetchAppointments();
     } catch (error) {

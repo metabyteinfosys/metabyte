@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaLock, FaUserShield } from 'react-icons/fa';
+import api from '../../services/api';
 import './AdminLogin.css';
 
 const AdminLogin: React.FC = () => {
@@ -27,19 +28,9 @@ const AdminLogin: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
-      }
+      // Use api service instead of fetch
+      const response = await api.post('/auth/login', formData);
+      const data = response.data;
 
       // Store token and admin info
       localStorage.setItem('adminToken', data.token);
@@ -48,7 +39,7 @@ const AdminLogin: React.FC = () => {
       // Redirect to dashboard
       navigate('/admin/dashboard');
     } catch (err: any) {
-      setError(err.message || 'An error occurred during login');
+      setError(err.response?.data?.message || 'An error occurred during login');
     } finally {
       setLoading(false);
     }

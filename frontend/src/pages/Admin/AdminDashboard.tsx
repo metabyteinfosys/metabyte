@@ -3,6 +3,7 @@ import { useNavigate, Routes, Route, Link } from 'react-router-dom';
 import { FaHome, FaFileInvoice, FaCalendarAlt, FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
 import QuotesManagement from './QuotesManagement';
 import AppointmentsManagement from './AppointmentsManagement';
+import api from '../../services/api';
 import './AdminDashboard.css';
 
 const AdminDashboard: React.FC = () => {
@@ -110,19 +111,13 @@ const DashboardHome: React.FC = () => {
     
     try {
       const [quotesRes, appointmentsRes] = await Promise.all([
-        fetch('http://localhost:5000/api/quotes', {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-        fetch('http://localhost:5000/api/appointments', {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
+        api.get('/quotes'),
+        api.get('/appointments'),
       ]);
 
-      const quotesData = await quotesRes.json();
-      const appointmentsData = await appointmentsRes.json();
 
-      const quotes = quotesData.data || quotesData;
-      const appointments = appointmentsData.data || appointmentsData;
+      const quotes = quotesRes.data.data || quotesRes.data;
+      const appointments = appointmentsRes.data.data || appointmentsRes.data;
 
       setStats({
         totalQuotes: quotes.length,
