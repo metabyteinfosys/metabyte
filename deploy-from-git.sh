@@ -20,7 +20,7 @@ echo -e "${GREEN}✓ Repository cloned successfully!${NC}"
 # Step 2: Install backend dependencies
 echo -e "\n${YELLOW}[2/8] Installing backend dependencies...${NC}"
 cd /home/ubuntu/metabyte/backend
-npm install --production
+npm install
 
 echo -e "${GREEN}✓ Backend dependencies installed!${NC}"
 
