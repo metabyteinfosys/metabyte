@@ -32,7 +32,7 @@ const getQuotes = () => {
         process.exit(0);
       }
       
-      console.log(`\n✅ Total Quotes: ${quotes.length}`);
+      console.log(`\n Total Quotes: ${quotes.length}`);
       
       if (quotes.length === 0) {
         console.log('\nNo quotes submitted yet. Submit a quote from the website first!');
