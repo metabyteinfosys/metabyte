@@ -101,23 +101,27 @@ const DashboardHome: React.FC = () => {
     pendingQuotes: 0,
     pendingAppointments: 0,
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchStats();
   }, []);
 
   const fetchStats = async () => {
-    const token = localStorage.getItem('adminToken');
-    
     try {
+      setLoading(true);
+      
+      // The api service will automatically add the auth token
       const [quotesRes, appointmentsRes] = await Promise.all([
         api.get('/quotes'),
         api.get('/appointments'),
       ]);
 
-
       const quotes = quotesRes.data.data || quotesRes.data;
       const appointments = appointmentsRes.data.data || appointmentsRes.data;
+
+      console.log('Quotes:', quotes); // Debug log
+      console.log('Appointments:', appointments); // Debug log
 
       setStats({
         totalQuotes: quotes.length,
@@ -125,10 +129,21 @@ const DashboardHome: React.FC = () => {
         pendingQuotes: quotes.filter((q: any) => q.status === 'pending').length,
         pendingAppointments: appointments.filter((a: any) => a.status === 'pending').length,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching stats:', error);
+      console.error('Error response:', error.response?.data); // Debug log
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="dashboard-home">
+        <h2>Loading dashboard...</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-home">
