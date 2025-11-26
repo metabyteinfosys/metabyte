@@ -39,7 +39,7 @@ const About: React.FC = () => {
           >
             <h1 className="about-hero-title">About Metabyte</h1>
             <p className="about-hero-description">
-              Transforming businesses through innovative technology solutions since 2013
+              Transforming businesses through innovative technology solutions
             </p>
           </motion.div>
         </div>
